@@ -39,23 +39,25 @@
 
   <!-- Components -->
   <script src="./assets/js/components/LoadingPage.jsx" type="text/babel"></script>
-  <script src="./assets/js/components/ComingSoonPage.jsx" type="text/babel"></script>
   <script src="./assets/js/components/NavBar.jsx" type="text/babel"></script>
   <script src="./assets/js/components/Home.jsx" type="text/babel"></script>
-  <script src="./assets/js/components/RegionCompetitions.jsx" type="text/babel"></script>
-  <script src="./assets/js/components/Season202526Page.jsx" type="text/babel"></script>
-  <script src="./assets/js/components/Fixtures.jsx" type="text/babel"></script>
-  <script src="./assets/js/components/Teams.jsx" type="text/babel"></script>
-  <script src="./assets/js/components/Stats.jsx" type="text/babel"></script>
-  <script src="./assets/js/components/AdminLogin.jsx" type="text/babel"></script>
-  <script src="./assets/js/components/AdminDashboard.jsx" type="text/babel"></script>
-  <script src="./assets/js/components/AdminTeams.jsx" type="text/babel"></script>
-  <script src="./assets/js/components/AdminFixtures.jsx" type="text/babel"></script>
-  <script src="./assets/js/components/AdminStatsSettings.jsx" type="text/babel"></script>
-  <script src="./assets/js/components/AdminPanel.jsx" type="text/babel"></script>
 
-  <!-- App root -->
-  <script src="./assets/js/app.jsx" type="text/babel"></script>
+  <!-- Inline page bootstrap (Home) -->
+  <script type="text/babel">
+    function Page(){
+      const [theme, setTheme] = React.useState(loadLS('pm_theme','dark'));
+      const isAuthed = sessionStorage.getItem('pm_authed')==='1';
+      React.useEffect(()=>{ document.documentElement.classList.add(theme); },[]);
+      return (
+        <div className="min-h-screen">
+          <NavBar theme={theme} setTheme={setTheme} route="/" setRoute={()=>{}} isAuthed={isAuthed} />
+          <Home />
+        </div>
+      );
+    }
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<Page/>);
+  </script>
 </body>
 </html>
 

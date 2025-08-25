@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PMxFootball • Login</title>
+
+  <script src="./assets/js/tailwind-config.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@0.447.0/dist/umd/lucide.min.js"></script>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <link rel="stylesheet" href="./assets/css/styles.css" />
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100 dark:bg-slate-950 dark:text-slate-100 light:bg-white light:text-slate-900 transition-all duration-300 font-body animated-bg floating-shapes">
+  <div id="root"></div>
+
+  <script src="./assets/js/utils.js" type="text/babel"></script>
+  <script src="./assets/js/components/LoadingPage.jsx" type="text/babel"></script>
+  <script src="./assets/js/components/NavBar.jsx" type="text/babel"></script>
+  <script src="./assets/js/components/AdminLogin.jsx" type="text/babel"></script>
+
+  <script type="text/babel">
+    function Page(){
+      const [theme, setTheme] = React.useState(loadLS('pm_theme','dark'));
+      const isAuthed = sessionStorage.getItem('pm_authed')==='1';
+      React.useEffect(()=>{ document.documentElement.classList.add(theme); },[]);
+      return (
+        <div className="min-h-screen">
+          <NavBar theme={theme} setTheme={setTheme} route="/login" setRoute={()=>{}} isAuthed={isAuthed} />
+          <AdminLogin onAuthed={()=>{ window.location.href = 'admin.html'; }} />
+        </div>
+      );
+    }
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<Page/>);
+  </script>
+</body>
+</html>
+
+
