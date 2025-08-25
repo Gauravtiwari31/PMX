@@ -9,6 +9,9 @@ function AdminLogin({ onAuthed }){
     return () => clearTimeout(timer);
   }, []);
 
+  // Keep hooks order stable across renders (must not be after conditional returns)
+  React.useEffect(()=>{ if (window.lucide) window.lucide.createIcons(); }, []);
+
   if (loading) return <LoadingPage />;
 
   const tryLogin = () => {
@@ -21,8 +24,6 @@ function AdminLogin({ onAuthed }){
       setErr('Invalid credentials');
     }
   };
-
-  React.useEffect(()=>{ if (window.lucide) window.lucide.createIcons(); }, []);
 
   return (
     <main className="min-h-[70vh] container mx-auto px-4 flex items-center justify-center animate-fade-in">

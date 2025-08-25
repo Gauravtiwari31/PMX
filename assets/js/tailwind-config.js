@@ -1,5 +1,7 @@
-// Loaded before Tailwind CDN in index.html
-tailwind.config = {
+// Loaded before Tailwind CDN in index.html and other pages
+// Ensure we don't reference an undefined identifier in strict mode
+window.tailwind = window.tailwind || {};
+window.tailwind.config = {
   darkMode: 'class',
   theme: {
     extend: {
