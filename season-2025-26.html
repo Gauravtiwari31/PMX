@@ -15,14 +15,14 @@
 <body class="min-h-screen bg-slate-950 text-slate-100 dark:bg-slate-950 dark:text-slate-100 light:bg-white light:text-slate-900 transition-all duration-300 font-body animated-bg floating-shapes">
   <div id="root"></div>
 
-  <script src="./assets/js/data.js" type="text/babel"></script>
-  <script src="./assets/js/utils.js" type="text/babel"></script>
-  <script src="./assets/js/components/NavBar.jsx" type="text/babel"></script>
-  <script src="./assets/js/components/LoadingPage.jsx" type="text/babel"></script>
-  <script src="./assets/js/components/RegionCompetitions.jsx" type="text/babel"></script>
-  <script src="./assets/js/components/Season202526Page.jsx" type="text/babel"></script>
+  <script src="./assets/js/data.js" type="text/babel" data-presets="env,react"></script>
+  <script src="./assets/js/utils.js" type="text/babel" data-presets="env,react"></script>
+  <script src="./assets/js/components/NavBar.jsx" type="text/babel" data-presets="env,react"></script>
+  <script src="./assets/js/components/LoadingPage.jsx" type="text/babel" data-presets="env,react"></script>
+  <script src="./assets/js/components/RegionCompetitions.jsx" type="text/babel" data-presets="env,react"></script>
+  <script src="./assets/js/components/Season202526Page.jsx" type="text/babel" data-presets="env,react"></script>
 
-  <script type="text/babel">
+  <script type="text/babel" data-presets="env,react">
     function Page(){
       const [theme, setTheme] = React.useState(loadLS('pm_theme','dark'));
       const isAuthed = sessionStorage.getItem('pm_authed')==='1';
