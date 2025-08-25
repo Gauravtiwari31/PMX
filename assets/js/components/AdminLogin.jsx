@@ -12,7 +12,9 @@ function AdminLogin({ onAuthed }){
   if (loading) return <LoadingPage />;
 
   const tryLogin = () => {
-    if(u === 'admin' && p === 'adminpassword'){
+    const username = (u || '').trim();
+    const password = (p || '').trim();
+    if(username === 'admin' && password === 'adminpassword'){
       sessionStorage.setItem('pm_authed','1'); 
       onAuthed(true); 
     } else {
@@ -33,7 +35,7 @@ function AdminLogin({ onAuthed }){
           <p className="text-slate-400 mt-2">Enter your credentials to continue</p>
         </div>
         
-        <div className="space-y-4">
+        <form className="space-y-4" onSubmit={(e)=>{ e.preventDefault(); tryLogin(); }}>
           <input 
             className="w-full px-4 py-3 rounded-xl bg-slate-800/50 border border-primary/20 focus:border-primary transition-colors font-body" 
             placeholder="Username" 
@@ -46,17 +48,17 @@ function AdminLogin({ onAuthed }){
             placeholder="Password" 
             value={p} 
             onChange={e=>setP(e.target.value)} 
-            onKeyPress={e => e.key === 'Enter' && tryLogin()}
+            onKeyDown={e => e.key === 'Enter' && tryLogin()}
           />
           {err && <div className="text-red-400 text-sm animate-bounce-gentle">{err}</div>}
           <button 
-            onClick={tryLogin} 
+            type="submit"
             className="w-full py-3 rounded-xl bg-primary hover:bg-secondary transition-all duration-300 hover:scale-105 font-body font-semibold"
           >
             Sign In
           </button>
           <p className="text-xs text-slate-400 text-center">Demo credentials: admin / adminpassword</p>
-        </div>
+        </form>
       </div>
     </main>
   );
