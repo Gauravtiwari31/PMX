@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PMxFootball - Redefining Football Performance</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%2300bcd4'/><text x='50' y='58' font-size='52' text-anchor='middle' fill='white' font-family='Arial'>⚽</text></svg>">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            heading: ['Montserrat', 'sans-serif'],
+            body: ['Open Sans', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#ecfeff', 100: '#cffafe', 200: '#a5f3fc', 300: '#67e8f9', 400: '#22d3ee', 500: '#06b6d4', 600: '#0891b2', 700: '#0e7490', 800: '#155e75', 900: '#164e63'
+            },
+            primary: '#06b6d4',   // Main brand blue
+            secondary: '#0e7490', // Darker blue
+            accent: '#22d3ee',    // Light blue accent
+            neutral: '#1e293b'    // Dark gray
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'float-delayed': 'float 6s ease-in-out infinite 2s',
+            'float-slow': 'float 8s ease-in-out infinite 1s',
+            'pulse-slow': 'pulse 4s ease-in-out infinite',
+            'slide-in': 'slideIn 0.5s ease-out',
+            'fade-in': 'fadeIn 0.8s ease-out',
+            'bounce-gentle': 'bounceGentle 2s ease-in-out infinite',
+            'spin-slow': 'spin 3s linear infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-20px)' }
+            },
+            slideIn: {
+              '0%': { transform: 'translateX(-100%)', opacity: '0' },
+              '100%': { transform: 'translateX(0)', opacity: '1' }
+            },
+            fadeIn: {
+              '0%': { opacity: '0', transform: 'translateY(20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' }
+            },
+            bounceGentle: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Icons -->
+  <script src="https://unpkg.com/lucide@0.447.0/dist/umd/lucide.min.js"></script>
+
+  <!-- React + ReactDOM + Babel -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Chart.js (for charts) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+
+  <style>
+    :root { 
+      color-scheme: light dark; 
+      --primary: #06b6d4;
+      --secondary: #0e7490;
+      --accent: #22d3ee;
+      --neutral: #1e293b;
+    }
+    
+    html, body { height: 100%; }
+    
+    .animated-bg {
+      background: linear-gradient(-45deg, var(--primary), var(--secondary), var(--accent), var(--neutral));
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+    }
+    
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    .floating-shapes::before,
+    .floating-shapes::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(6, 182, 212, 0.1);
+      animation: float 8s ease-in-out infinite;
+      pointer-events: none;
+    }
+    
+    .floating-shapes::before {
+      width: 100px;
+      height: 100px;
+      top: 20%;
+      left: 10%;
+      animation-delay: -2s;
+    }
+    
+    .floating-shapes::after {
+      width: 150px;
+      height: 150px;
+      top: 60%;
+      right: 10%;
+      animation-delay: -4s;
+    }
+    
+    .glass { 
+      backdrop-filter: blur(8px); 
+      background: rgba(6, 182, 212, 0.05);
+    }
+    
+    .card-grad { 
+      background: linear-gradient(135deg, rgba(6,182,212,.08), rgba(14,116,144,.08)); 
+      border: 1px solid rgba(6, 182, 212, 0.2);
+    }
+    
+    .light .card-grad { 
+      background: linear-gradient(135deg, rgba(6,182,212,.04), rgba(14,116,144,.04)); 
+      border: 1px solid rgba(6, 182, 212, 0.15);
+    }
+    
+    .hero-gradient {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    }
+    
+    .loading-spinner {
+      border: 3px solid rgba(6, 182, 212, 0.3);
+      border-radius: 50%;
+      border-top: 3px solid var(--primary);
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+    }
+    
+    .coming-soon-text {
+      background: linear-gradient(45deg, var(--primary), var(--accent), var(--secondary));
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 3s ease infinite;
+    }
+
+    .content-paragraph {
+      border-left: 4px solid var(--primary);
+      padding-left: 1rem;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100 dark:bg-slate-950 dark:text-slate-100 light:bg-white light:text-slate-900 transition-all duration-300 font-body animated-bg floating-shapes">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useMemo, useEffect, useRef } = React;
+
+    // Sample data for 2025/26 season competitions
+    const SEASON_2025_26_DATA = {
+      uefa: [
+        { key: 'ucl_25_26', name: 'UEFA Champions League', 
+          teams: ["Arsenal", "Real Madrid", "Bayern München", "Inter", "Barcelona", "Dortmund", "PSG", "Aston Villa"],
+          fixtures: [
+            { home: 'Arsenal', score: '3-0', away: 'Real Madrid', pm: '85-72' },
+            { home: 'Bayern München', score: '1-2', away: 'Inter', pm: '78-82' },
+            { home: 'Barcelona', score: '4-0', away: 'Dortmund', pm: '92-65' },
+            { home: 'PSG', score: '3-1', away: 'Aston Villa', pm: '88-76' },
+            { home: 'Aston Villa', score: '3-2', away: 'PSG', pm: '84-81' },
+            { home: 'Dortmund', score: '3-1', away: 'Barcelona', pm: '87-79' }
+          ] 
+        },
+        { key: 'uel_25_26', name: 'UEFA Europa League', teams: [], fixtures: [
+            { home: 'Arsenal', score: '3-0', away: 'Real Madrid', pm: '85-72' },
+            { home: 'Bayern München', score: '1-2', away: 'Inter', pm: '78-82' },
+            { home: 'Barcelona', score: '4-0', away: 'Dortmund', pm: '92-65' },
+            { home: 'PSG', score: '3-1', away: 'Aston Villa', pm: '88-76' },
+            { home: 'Aston Villa', score: '3-2', away: 'PSG', pm: '84-81' },
+            { home: 'Dortmund', score: '3-1', away: 'Barcelona', pm: '87-79' }
+          ] },
+        { key: 'usup_25_26', name: 'UEFA Super Cup', teams: [], fixtures: [
+            { home: 'Arsenal', score: '3-0', away: 'Real Madrid', pm: '85-72' },
+            { home: 'Bayern München', score: '1-2', away: 'Inter', pm: '78-82' },
+            { home: 'Barcelona', score: '4-0', away: 'Dortmund', pm: '92-65' },
+            { home: 'PSG', score: '3-1', away: 'Aston Villa', pm: '88-76' },
+            { home: 'Aston Villa', score: '3-2', away: 'PSG', pm: '84-81' },
+            { home: 'Dortmund', score: '3-1', away: 'Barcelona', pm: '87-79' }
+          ] }
+      ],
+      england: [
+        { key: 'epl_25_26', name: 'Premier League', teams: [], fixtures: [
+            { home: 'Arsenal', score: '3-0', away: 'Real Madrid', pm: '85-72' },
+            { home: 'Bayern München', score: '1-2', away: 'Inter', pm: '78-82' },
+            { home: 'Barcelona', score: '4-0', away: 'Dortmund', pm: '92-65' },
+            { home: 'PSG', score: '3-1', away: 'Aston Villa', pm: '88-76' },
+            { home: 'Aston Villa', score: '3-2', away: 'PSG', pm: '84-81' },
+            { home: 'Dortmund', score: '3-1', away: 'Barcelona', pm: '87-79' }
+          ] },
+        { key: 'facup_25_26', name: 'FA Cup', teams: [], fixtures: [
+            { home: 'Arsenal', score: '3-0', away: 'Real Madrid', pm: '85-72' },
+            { home: 'Bayern München', score: '1-2', away: 'Inter', pm: '78-82' },
+            { home: 'Barcelona', score: '4-0', away: 'Dortmund', pm: '92-65' },
+            { home: 'PSG', score: '3-1', away: 'Aston Villa', pm: '88-76' },
+            { home: 'Aston Villa', score: '3-2', away: 'PSG', pm: '84-81' },
+            { home: 'Dortmund', score: '3-1', away: 'Barcelona', pm: '87-79' }
+          ] },
+        { key: 'carabao_25_26', name: 'Carabao Cup', teams: [], fixtures: [
+            { home: 'Arsenal', score: '3-0', away: 'Real Madrid', pm: '85-72' },
+            { home: 'Bayern München', score: '1-2', away: 'Inter', pm: '78-82' },
+            { home: 'Barcelona', score: '4-0', away: 'Dortmund', pm: '92-65' },
+            { home: 'PSG', score: '3-1', away: 'Aston Villa', pm: '88-76' },
+            { home: 'Aston Villa', score: '3-2', away: 'PSG', pm: '84-81' },
+            { home: 'Dortmund', score: '3-1', away: 'Barcelona', pm: '87-79' }
+          ] },
+        { key: 'cs_25_26', name: 'Community Shield', teams: [], fixtures: [
+            { home: 'Arsenal', score: '3-0', away: 'Real Madrid', pm: '85-72' },
+            { home: 'Bayern München', score: '1-2', away: 'Inter', pm: '78-82' },
+            { home: 'Barcelona', score: '4-0', away: 'Dortmund', pm: '92-65' },
+            { home: 'PSG', score: '3-1', away: 'Aston Villa', pm: '88-76' },
+            { home: 'Aston Villa', score: '3-2', away: 'PSG', pm: '84-81' },
+            { home: 'Dortmund', score: '3-1', away: 'Barcelona', pm: '87-79' }
+          ] }
+      ],
+      spain: [
+        { key: 'laliga_25_26', name: 'La Liga', teams: [], fixtures: [
+            { home: 'Arsenal', score: '3-0', away: 'Real Madrid', pm: '85-72' },
+            { home: 'Bayern München', score: '1-2', away: 'Inter', pm: '78-82' },
+            { home: 'Barcelona', score: '4-0', away: 'Dortmund', pm: '92-65' },
+            { home: 'PSG', score: '3-1', away: 'Aston Villa', pm: '88-76' },
+            { home: 'Aston Villa', score: '3-2', away: 'PSG', pm: '84-81' },
+            { home: 'Dortmund', score: '3-1', away: 'Barcelona', pm: '87-79' }
+          ] },
+        { key: 'cdr_25_26', name: 'Copa del Rey', teams: [], fixtures: [
+            { home: 'Arsenal', score: '3-0', away: 'Real Madrid', pm: '85-72' },
+            { home: 'Bayern München', score: '1-2', away: 'Inter', pm: '78-82' },
+            { home: 'Barcelona', score: '4-0', away: 'Dortmund', pm: '92-65' },
+            { home: 'PSG', score: '3-1', away: 'Aston Villa', pm: '88-76' },
+            { home: 'Aston Villa', score: '3-2', away: 'PSG', pm: '84-81' },
+            { home: 'Dortmund', score: '3-1', away: 'Barcelona', pm: '87-79' }
+          ] },
+        { key: 'ss_25_26', name: 'Spanish Supercup', teams: [], fixtures: [
+            { home: 'Arsenal', score: '3-0', away: 'Real Madrid', pm: '85-72' },
+            { home: 'Bayern München', score: '1-2', away: 'Inter', pm: '78-82' },
+            { home: 'Barcelona', score: '4-0', away: 'Dortmund', pm: '92-65' },
+            { home: 'PSG', score: '3-1', away: 'Aston Villa', pm: '88-76' },
+            { home: 'Aston Villa', score: '3-2', away: 'PSG', pm: '84-81' },
+            { home: 'Dortmund', score: '3-1', away: 'Barcelona', pm: '87-79' }
+          ] }
+      ],
+      france: [
+        { key: 'ligue1_25_26', name: 'Ligue 1', teams: [], fixtures: [
+            { home: 'Arsenal', score: '3-0', away: 'Real Madrid', pm: '85-72' },
+            { home: 'Bayern München', score: '1-2', away: 'Inter', pm: '78-82' },
+            { home: 'Barcelona', score: '4-0', away: 'Dortmund', pm: '92-65' },
+            { home: 'PSG', score: '3-1', away: 'Aston Villa', pm: '88-76' },
+            { home: 'Aston Villa', score: '3-2', away: 'PSG', pm: '84-81' },
+            { home: 'Dortmund', score: '3-1', away: 'Barcelona', pm: '87-79' }
+          ] },
+        { key: 'cdf_25_26', name: 'Coupe de France', teams: [], fixtures: [
+            { home: 'Arsenal', score: '3-0', away: 'Real Madrid', pm: '85-72' },
+            { home: 'Bayern München', score: '1-2', away: 'Inter', pm: '78-82' },
+            { home: 'Barcelona', score: '4-0', away: 'Dortmund', pm: '92-65' },
+            { home: 'PSG', score: '3-1', away: 'Aston Villa', pm: '88-76' },
+            { home: 'Aston Villa', score: '3-2', away: 'PSG', pm: '84-81' },
+            { home: 'Dortmund', score: '3-1', away: 'Barcelona', pm: '87-79' }
+          ] },
+        { key: 'fs_25_26', name: 'French Supercup', teams: [], fixtures: [
+            { home: 'Arsenal', score: '3-0', away: 'Real Madrid', pm: '85-72' },
+            { home: 'Bayern München', score: '1-2', away: 'Inter', pm: '78-82' },
+            { home: 'Barcelona', score: '4-0', away: 'Dortmund', pm: '92-65' },
+            { home: 'PSG', score: '3-1', away: 'Aston Villa', pm: '88-76' },
+            { home: 'Aston Villa', score: '3-2', away: 'PSG', pm: '84-81' },
+            { home: 'Dortmund', score: '3-1', away: 'Barcelona', pm: '87-79' }
+          ] }
+      ],
+      italy: [
+        { key: 'seriea_25_26', name: 'Serie A', teams: [], fixtures: [
+            { home: 'Arsenal', score: '3-0', away: 'Real Madrid', pm: '85-72' },
+            { home: 'Bayern München', score: '1-2', away: 'Inter', pm: '78-82' },
+            { home: 'Barcelona', score: '4-0', away: 'Dortmund', pm: '92-65' },
+            { home: 'PSG', score: '3-1', away: 'Aston Villa', pm: '88-76' },
+            { home: 'Aston Villa', score: '3-2', away: 'PSG', pm: '84-81' },
+            { home: 'Dortmund', score: '3-1', away: 'Barcelona', pm: '87-79' }
+          ] },
+        { key: 'coppa_25_26', name: 'Coppa Italia', teams: [], fixtures: [
+            { home: 'Arsenal', score: '3-0', away: 'Real Madrid', pm: '85-72' },
+            { home: 'Bayern München', score: '1-2', away: 'Inter', pm: '78-82' },
+            { home: 'Barcelona', score: '4-0', away: 'Dortmund', pm: '92-65' },
+            { home: 'PSG', score: '3-1', away: 'Aston Villa', pm: '88-76' },
+            { home: 'Aston Villa', score: '3-2', away: 'PSG', pm: '84-81' },
+            { home: 'Dortmund', score: '3-1', away: 'Barcelona', pm: '87-79' }
+          ] },
+        { key: 'is_25_26', name: 'Italian Supercup', teams: [], fixtures: [
+            { home: 'Arsenal', score: '3-0', away: 'Real Madrid', pm: '85-72' },
+            { home: 'Bayern München', score: '1-2', away: 'Inter', pm: '78-82' },
+            { home: 'Barcelona', score: '4-0', away: 'Dortmund', pm: '92-65' },
+            { home: 'PSG', score: '3-1', away: 'Aston Villa', pm: '88-76' },
+            { home: 'Aston Villa', score: '3-2', away: 'PSG', pm: '84-81' },
+            { home: 'Dortmund', score: '3-1', away: 'Barcelona', pm: '87-79' }
+          ] }
+      ],
+      germany: [
+        { key: 'bundes_25_26', name: 'Bundesliga', teams: [], fixtures: [
+            { home: 'Arsenal', score: '3-0', away: 'Real Madrid', pm: '85-72' },
+            { home: 'Bayern München', score: '1-2', away: 'Inter', pm: '78-82' },
+            { home: 'Barcelona', score: '4-0', away: 'Dortmund', pm: '92-65' },
+            { home: 'PSG', score: '3-1', away: 'Aston Villa', pm: '88-76' },
+            { home: 'Aston Villa', score: '3-2', away: 'PSG', pm: '84-81' },
+            { home: 'Dortmund', score: '3-1', away: 'Barcelona', pm: '87-79' }
+          ] },
+        { key: 'dfb_25_26', name: 'DFB Pokal', teams: [], fixtures: [
+            { home: 'Arsenal', score: '3-0', away: 'Real Madrid', pm: '85-72' },
+            { home: 'Bayern München', score: '1-2', away: 'Inter', pm: '78-82' },
+            { home: 'Barcelona', score: '4-0', away: 'Dortmund', pm: '92-65' },
+            { home: 'PSG', score: '3-1', away: 'Aston Villa', pm: '88-76' },
+            { home: 'Aston Villa', score: '3-2', away: 'PSG', pm: '84-81' },
+            { home: 'Dortmund', score: '3-1', away: 'Barcelona', pm: '87-79' }
+          ] },
+        { key: 'gs_25_26', name: 'German Supercup', teams: [], fixtures: [
+            { home: 'Arsenal', score: '3-0', away: 'Real Madrid', pm: '85-72' },
+            { home: 'Bayern München', score: '1-2', away: 'Inter', pm: '78-82' },
+            { home: 'Barcelona', score: '4-0', away: 'Dortmund', pm: '92-65' },
+            { home: 'PSG', score: '3-1', away: 'Aston Villa', pm: '88-76' },
+            { home: 'Aston Villa', score: '3-2', away: 'PSG', pm: '84-81' },
+            { home: 'Dortmund', score: '3-1', away: 'Barcelona', pm: '87-79' }
+          ] }
+      ]
+    };
+
+    // Loading Component
+    function LoadingPage() {
+      return (
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="text-center animate-fade-in">
+            <div className="loading-spinner mx-auto mb-6"></div>
+            <h2 className="text-2xl font-bold mb-2 animate-pulse-slow">Loading PMxFootball</h2>
+            <p className="text-slate-400 animate-bounce-gentle">Calculating performance metrics...</p>
+          </div>
+        </div>
+      );
+    }
+
+    // Coming Soon Component
+    function ComingSoonPage() {
+      return (
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="text-center animate-fade-in">
+            <div className="text-8xl mb-6 animate-bounce-gentle">⚽</div>
+            <h1 className="text-6xl font-bold mb-4 coming-soon-text">COMING SOON</h1>
+            <p className="text-xl text-slate-400 animate-pulse-slow">2024/25 Season Analysis</p>
+            <div className="mt-8 flex justify-center">
+              <div className="w-16 h-1 bg-primary rounded animate-pulse"></div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // Utilities
+    const saveLS = (k,v) => localStorage.setItem(k, JSON.stringify(v));
+    const loadLS = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } };
+
+    function clsx(...xs){ return xs.filter(Boolean).join(' '); }
+
+    // Navigation Bar
+    function NavBar({ theme, setTheme, route, setRoute, isAuthed }){
+      useEffect(()=>{ lucide.createIcons(); }, [theme, route, isAuthed]);
+      
+      const Item = ({label, to, onClick}) => (
+        <button 
+          onClick={onClick || (()=>setRoute(to))} 
+          className={clsx(
+            'px-4 py-2 rounded-xl transition-all duration-300 font-body hover:scale-105',
+            route===to ? 'bg-primary/20 text-primary font-semibold shadow-lg' : 'hover:bg-white/10'
+          )}
+        >
+          {label}
+        </button>
+      );
+
+      return (
+        <header className="sticky top-0 z-40 glass border-b border-primary/20 animate-slide-in">
+          <div className="container mx-auto px-4">
+            <div className="flex items-center gap-3 py-4">
+              <div className="flex items-center gap-2 text-primary animate-float">
+                <i data-lucide="football" className="w-7 h-7"></i>
+                <span className="font-bold font-heading text-xl">PMxFootball</span>
+              </div>
+              <div className="flex-1"></div>
+              <nav className="hidden md:flex gap-2">
+                <Item label="Home" to="/" />
+                <Item label="2024/25" to="/coming-soon" />
+                <Item label="2025/26" to="/season-2025-26" />
+                <Item label="Admin" to="/admin" />
+              </nav>
+              <div className="flex items-center gap-3">
+                <button 
+                  onClick={()=>{
+                    const next = theme==='dark'?'light':'dark';
+                    setTheme(next);
+                    document.documentElement.classList.remove('dark','light');
+                    document.documentElement.classList.add(next);
+                    localStorage.setItem('pm_theme', next);
+                  }} 
+                  className="p-3 rounded-xl bg-primary/10 hover:bg-primary/20 transition-all duration-300 hover:scale-105"
+                >
+                  <i data-lucide={theme==='dark'?'moon':'sun'} className="w-5 h-5"></i>
+                </button>
+                <button 
+                  onClick={()=>setRoute('/admin')} 
+                  className="px-4 py-2 rounded-xl bg-primary hover:bg-secondary transition-all duration-300 hover:scale-105 font-body"
+                >
+                  <i data-lucide="lock" className="w-4 h-4 inline mr-2"></i>
+                  Admin
+                </button>
+              </div>
+            </div>
+          </div>
+        </header>
+      );
+    }
+
+    // Home Page
+    function Home(){
+      return (
+        <main className="container mx-auto px-4 py-8 animate-fade-in">
+          {/* Hero Section */}
+          <section className="rounded-3xl overflow-hidden hero-gradient text-white p-12 mb-16 relative animate-float-slow">
+            <div className="absolute inset-0 bg-white/5 backdrop-blur-sm"></div>
+            <div className="relative max-w-4xl mx-auto text-center">
+              <h1 className="text-5xl md:text-6xl font-bold mb-6 font-heading animate-slide-in">PMxFootball</h1>
+              <h2 className="text-3xl md:text-4xl font-medium mb-8 font-heading animate-fade-in">Redefining Football Performance</h2>
+              <p className="content-paragraph text-xl opacity-90 mb-4 animate-fade-in">At PMxFootball, we’re changing the way football performance is measured and understood.</p>
+              <p className="content-paragraph text-xl opacity-90 mb-4 animate-fade-in">Where traditional statistics often stop at goals, possession, or shots on target, our Performance Metric (PM) Index goes further. It tells you not just what happened, but how well it happened.</p>
+              <p className="content-paragraph text-xl opacity-90 mb-4 animate-fade-in">The PM Index is built on a carefully designed mathematical model that weighs every key aspect of the game — attacking efficiency, defensive stability, creativity, possession, and overall control. By combining these elements, it produces a single, clear number that reflects the true quality of a team’s performance in any match.</p>
+              <p className="content-paragraph text-xl opacity-90 mb-4 animate-fade-in">We cover all of Europe’s top football — the five major leagues (Premier League, La Liga, Serie A, Bundesliga, Ligue 1) as well as the biggest continental competitions including the Champions League, Europa League, and Super Cup. From high-profile finals to league clashes, PM Index consistently reveals which team truly played better.</p>
+              <p className="content-paragraph text-xl opacity-90 mb-10 animate-fade-in">This matters because PMxFootball is for those who want to go beyond the scoreline and see the game in its full depth. It’s football, understood through numbers — precise, fair, and revealing.</p>
+            </div>
+          </section>
+
+          {/* Better than xG? Section */}
+          <section className="mb-16">
+            <h2 className="text-3xl font-bold mb-8 font-heading text-center text-white">Better than xG?</h2>
+            <div className="card-grad rounded-2xl p-8 animate-float">
+              <p className="content-paragraph text-lg mb-4">Expected Goals (xG) has become one of the most widely used stats in modern football analysis, but it tells only part of the story. xG focuses almost entirely on the attacking side of the game — the quality of chances created and taken. While this is valuable, it overlooks other crucial aspects of performance: defensive resilience, possession control, passing efficiency, and the ability to manage different phases of a match.</p>
+              <p className="content-paragraph text-lg mb-4">The PM Index was designed to bridge that gap. By considering a broader set of performance indicators, PM captures the full balance of a team’s display. It recognizes not just how dangerous a team’s attack was, but also how well they defended, how effectively they used possession, and how consistently they performed across all areas of the pitch.</p>
+              <p className="content-paragraph text-lg mb-4">For example, imagine a Champions League knockout match:</p>
+              <ul className="list-disc pl-8 mb-4 space-y-2">
+                <li className="text-lg">Team A records an xG of 2.1 but spends most of the game under pressure, losing duels and unable to dictate play.</li>
+                <li className="text-lg">Team B ends with an xG of only 1.4, yet dominates midfield, controls possession, and defends with far greater stability.</li>
+              </ul>
+              <p className="content-paragraph text-lg mb-4">xG alone would suggest Team A had the better outing. The PM Index, however, shows that Team B delivered the stronger all-round performance — proving that football cannot be measured by attacking chances alone.</p>
+              <p className="content-paragraph text-lg mb-4">Here’s why that matters:</p>
+              <p className="content-paragraph text-lg mb-4">Out of the last five Champions League finals, only two were won by the team with the higher xG. On PM, though, the winners came out on top in all five — showing how closely it reflects the reality of performance.</p>
+              <p className="content-paragraph text-lg mb-4">But PM isn’t just about winners:</p>
+              <p className="content-paragraph text-lg">A famous example is Barcelona’s semi-final against Inter, where they conceded four goals but still topped PM. The scoreline went against them, but PM showed the truth: Barcelona were the stronger side in overall play.</p>
+            </div>
+          </section>
+
+          {/* The Future of Football Analysis */}
+          <section className="mb-16">
+            <h2 className="text-3xl font-bold mb-8 font-heading text-center text-white">The Future of Football Analysis</h2>
+            <div className="card-grad rounded-2xl p-8 animate-float">
+              <p className="content-paragraph text-lg mb-4">PMxFootball isn’t here to replace the stats you know — it’s here to make them better.</p>
+              <p className="content-paragraph text-lg mb-4">We believe that football deserves a metric that’s as multi-dimensional as the game itself.</p>
+              <p className="content-paragraph text-lg">With PM Index, fans, analysts, and even casual followers can finally see beyond the scoreboard and discover who really controlled the game.</p>
+            </div>
+          </section>
+        </main>
+      );
+    }
+
+    // Season 2025/26 Page
+    function Season202526Page() {
+      const [loading, setLoading] = useState(true);
+      const [selectedRegion, setSelectedRegion] = useState(null);
+
+      useEffect(() => {
+        const timer = setTimeout(() => setLoading(false), 1500);
+        return () => clearTimeout(timer);
+      }, []);
+
+      if (loading) return <LoadingPage />;
+
+      const regions = [
+        { key: 'uefa', name: 'European Competitions (UEFA)', icon: '🇪🇺', color: 'bg-primary' },
+        { key: 'england', name: 'England Competitions', icon: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', color: 'bg-secondary' },
+        { key: 'spain', name: 'Spanish Competitions', icon: '🇪🇸', color: 'bg-accent' },
+        { key: 'france', name: 'France Competitions', icon: '🇫🇷', color: 'bg-primary' },
+        { key: 'italy', name: 'Italian Competitions', icon: '🇮🇹', color: 'bg-secondary' },
+        { key: 'germany', name: 'Germany Competitions', icon: '🇩🇪', color: 'bg-accent' }
+      ];
+
+      return (
+        <main className="container mx-auto px-4 py-8 animate-fade-in">
+          <div className="text-center mb-12">
+            <h1 className="text-4xl font-bold mb-4 font-heading animate-slide-in">Season 2025/26</h1>
+            <p className="text-xl text-slate-400 animate-fade-in">Select a region to explore competitions</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {regions.map((region, i) => (
+              <div 
+                key={region.key}
+                className="card-grad rounded-2xl p-8 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl animate-float-slow"
+                style={{animationDelay: `${i * 0.1}s`}}
+                onClick={() => setSelectedRegion(region.key)}
+              >
+                <div className="text-center">
+                  <div className="text-6xl mb-4 animate-bounce-gentle">{region.icon}</div>
+                  <h3 className="text-xl font-semibold font-heading mb-4">{region.name}</h3>
+                  <div className={`w-full h-1 ${region.color} rounded mb-4 animate-pulse`}></div>
+                  <p className="text-sm text-slate-400">Click to view competitions</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {selectedRegion && <RegionCompetitions region={selectedRegion} onBack={() => setSelectedRegion(null)} />}
+        </main>
+      );
+    }
+
+    // Region Competitions Component
+    function RegionCompetitions({ region, onBack }) {
+      const competitions = SEASON_2025_26_DATA[region] || [];
+      const [selectedComp, setSelectedComp] = useState(null);
+
+      const regionNames = {
+        uefa: 'European Competitions (UEFA)',
+        england: 'England Competitions', 
+        spain: 'Spanish Competitions',
+        france: 'France Competitions',
+        italy: 'Italian Competitions',
+        germany: 'Germany Competitions'
+      };
+
+      return (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-0 z-50 animate-fade-in">
+          <div className="bg-slate-900 p-8 w-full h-full overflow-y-auto">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold font-heading">{regionNames[region]}</h2>
+              <button onClick={onBack} className="p-2 hover:bg-slate-800 rounded-xl transition-colors">
+                <i data-lucide="x" className="w-6 h-6"></i>
+              </button>
+            </div>
+
+            {!selectedComp ? (
+              <div className="grid md:grid-cols-2 gap-4">
+                {competitions.map(comp => (
+                  <button
+                    key={comp.key}
+                    onClick={() => setSelectedComp(comp.key)}
+                    className="card-grad rounded-xl p-6 text-left hover:scale-105 transition-all duration-300"
+                  >
+                    <h3 className="text-lg font-semibold mb-2">{comp.name}</h3>
+                    <p className="text-sm text-slate-400">Click to view fixtures</p>
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <div className="space-y-6">
+                <div className="flex items-center gap-4">
+                  <button onClick={() => setSelectedComp(null)} className="p-2 hover:bg-slate-800 rounded-xl">
+                    <i data-lucide="arrow-left" className="w-5 h-5"></i>
+                  </button>
+                  <h3 className="text-xl font-semibold">{competitions.find(c => c.key === selectedComp)?.name}</h3>
+                </div>
+
+                {/* Fixtures Management - Full Width */}
+                <div className="card-grad rounded-xl p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <h4 className="text-lg font-semibold">Fixtures</h4>
+                  </div>
+                  <div className="space-y-4 overflow-y-auto">
+                    <h5 className="text-xl font-bold text-center">Quarter-final</h5>
+                    {competitions.find(c => c.key === selectedComp)?.fixtures.map((fixture, i) => (
+                      <div key={i} className="flex items-center justify-center p-3 bg-slate-800/50 rounded-lg">
+                        <div className="flex items-center justify-between w-1/2">
+                          <span className="font-semibold text-right pr-4">{fixture.home}</span>
+                          <div className="text-center px-4">
+                            <div>{fixture.score}</div>
+                            <div className="text-sm text-slate-400">PM: {fixture.pm}</div>
+                          </div>
+                          <span className="font-semibold text-left pl-4">{fixture.away}</span>
+                        </div>
+                      </div>
+                    ))}
+                    {competitions.find(c => c.key === selectedComp)?.fixtures.length === 0 && (
+                      <p className="text-slate-400 text-sm text-center">No fixtures added yet</p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    // Admin Login
+    function AdminLogin({ onAuthed }){
+      const [loading, setLoading] = useState(true);
+      const [u,setU] = useState(''); 
+      const [p,setP] = useState(''); 
+      const [err,setErr] = useState('');
+      
+      useEffect(() => {
+        const timer = setTimeout(() => setLoading(false), 1000);
+        return () => clearTimeout(timer);
+      }, []);
+
+      if (loading) return <LoadingPage />;
+      
+      const tryLogin = () => {
+        // Simple demo login
+        if(u === 'admin' && p === 'pm-strong-pass'){ 
+          sessionStorage.setItem('pm_authed','1'); 
+          onAuthed(true); 
+        } else {
+          setErr('Invalid credentials');
+        }
+      };
+      
+      useEffect(()=>{ lucide.createIcons(); }, []);
+      
+      return (
+        <main className="min-h-[70vh] container mx-auto px-4 flex items-center justify-center animate-fade-in">
+          <div className="w-full max-w-md card-grad rounded-2xl p-8 animate-float">
+            <div className="text-center mb-8">
+              <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse-slow">
+                <i data-lucide="lock" className="w-10 h-10 text-primary"></i>
+              </div>
+              <h2 className="text-2xl font-bold font-heading">Admin Access</h2>
+              <p className="text-slate-400 mt-2">Enter your credentials to continue</p>
+            </div>
+            
+            <div className="space-y-4">
+              <input 
+                className="w-full px-4 py-3 rounded-xl bg-slate-800/50 border border-primary/20 focus:border-primary transition-colors font-body" 
+                placeholder="Username" 
+                value={u} 
+                onChange={e=>setU(e.target.value)} 
+              />
+              <input 
+                type="password" 
+                className="w-full px-4 py-3 rounded-xl bg-slate-800/50 border border-primary/20 focus:border-primary transition-colors font-body" 
+                placeholder="Password" 
+                value={p} 
+                onChange={e=>setP(e.target.value)} 
+                onKeyPress={e => e.key === 'Enter' && tryLogin()}
+              />
+              {err && <div className="text-red-400 text-sm animate-bounce-gentle">{err}</div>}
+              <button 
+                onClick={tryLogin} 
+                className="w-full py-3 rounded-xl bg-primary hover:bg-secondary transition-all duration-300 hover:scale-105 font-body font-semibold"
+              >
+                Sign In
+              </button>
+              <p className="text-xs text-slate-400 text-center">Demo credentials: admin / pm-strong-pass</p>
+            </div>
+          </div>
+        </main>
+      );
+    }
+
+    // Admin Panel
+    function AdminPanel(){
+      const [loading, setLoading] = useState(true);
+      const [tab, setTab] = useState('dashboard');
+      
+      useEffect(() => {
+        const timer = setTimeout(() => setLoading(false), 1200);
+        return () => clearTimeout(timer);
+      }, []);
+
+      if (loading) return <LoadingPage />;
+
+      const tabs = [
+        { id: 'dashboard', label: 'Dashboard', icon: 'layout-dashboard' },
+        { id: 'teams', label: 'Teams', icon: 'users' },
+        { id: 'fixtures', label: 'Fixtures', icon: 'calendar' },
+        { id: 'stats', label: 'Statistics', icon: 'bar-chart-3' },
+        { id: 'settings', label: 'Settings', icon: 'settings' }
+      ];
+
+      return (
+        <main className="container mx-auto px-4 py-8 animate-fade-in">
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold mb-4 font-heading animate-slide-in">Admin Panel</h1>
+            <p className="text-slate-400">Manage competitions, teams, and performance data</p>
+          </div>
+
+          <div className="flex gap-2 mb-8 flex-wrap">
+            {tabs.map(t => (
+              <button 
+                key={t.id} 
+                onClick={()=>setTab(t.id)} 
+                className={clsx(
+                  'px-4 py-2 rounded-xl transition-all duration-300 flex items-center gap-2 hover:scale-105',
+                  tab===t.id ? 'bg-primary text-white shadow-lg' : 'bg-slate-800/50 hover:bg-slate-700/50'
+                )}
+              >
+                <i data-lucide={t.icon} className="w-4 h-4"></i>
+                {t.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="card-grad rounded-2xl p-8 animate-float-slow">
+            {tab === 'dashboard' && <AdminDashboard />}
+            {tab === 'teams' && <AdminTeams />}
+            {tab === 'fixtures' && <AdminFixtures />}
+            {tab === 'stats' && <AdminStats />}
+            {tab === 'settings' && <AdminSettings />}
+          </div>
+        </main>
+      );
+    }
+
+    function AdminDashboard() {
+      const stats = [
+        { label: 'Total Teams', value: '156', icon: 'users', color: 'text-primary' },
+        { label: 'Active Competitions', value: '18', icon: 'trophy', color: 'text-accent' },
+        { label: 'Fixtures Processed', value: '2,847', icon: 'calendar', color: 'text-secondary' },
+        { label: 'PM Calculations', value: '5,694', icon: 'bar-chart-3', color: 'text-primary' }
+      ];
+
+      return (
+        <div className="space-y-8">
+          <h2 className="text-2xl font-bold font-heading">Dashboard Overview</h2>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {stats.map((stat, i) => (
+              <div key={stat.label} className="bg-slate-800/30 rounded-xl p-6 animate-float-delayed" style={{animationDelay: `${i * 0.1}s`}}>
+                <div className="flex items-center justify-between mb-4">
+                  <i data-lucide={stat.icon} className={`w-8 h-8 ${stat.color}`}></i>
+                  <div className={`text-2xl font-bold ${stat.color}`}>{stat.value}</div>
+                </div>
+                <div className="text-sm text-slate-400">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="bg-slate-800/30 rounded-xl p-6">
+              <h3 className="text-lg font-semibold mb-4">Recent Activity</h3>
+              <div className="space-y-3">
+                {[
+                  'New fixture added: Arsenal vs Chelsea',
+                  'Team statistics updated: Manchester City',
+                  'PM calculations completed for Premier League',
+                  'Competition data imported: La Liga'
+                ].map((activity, i) => (
+                  <div key={i} className="flex items-center gap-3 p-3 bg-slate-700/30 rounded-lg animate-fade-in" style={{animationDelay: `${i * 0.1}s`}}>
+                    <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+                    <span className="text-sm">{activity}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="bg-slate-800/30 rounded-xl p-6">
+              <h3 className="text-lg font-semibold mb-4">Quick Actions</h3>
+              <div className="grid grid-cols-2 gap-3">
+                {[
+                  { label: 'Add Team', icon: 'user-plus' },
+                  { label: 'New Fixture', icon: 'calendar-plus' },
+                  { label: 'Import Data', icon: 'upload' },
+                  { label: 'Export Report', icon: 'download' }
+                ].map((action, i) => (
+                  <button key={action.label} className="p-4 bg-slate-700/30 hover:bg-primary/20 rounded-xl transition-all duration-300 hover:scale-105">
+                    <i data-lucide={action.icon} className="w-6 h-6 mx-auto mb-2 text-primary"></i>
+                    <div className="text-xs">{action.label}</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    function AdminTeams() {
+      const [teams, setTeams] = useState([
+        { id: 1, name: 'Manchester City', competition: 'Premier League', players: 25 },
+        { id: 2, name: 'Arsenal', competition: 'Premier League', players: 24 },
+        { id: 3, name: 'Liverpool', competition: 'Premier League', players: 26 }
+      ]);
+      const [showForm, setShowForm] = useState(false);
+      const [newTeam, setNewTeam] = useState({ name: '', competition: '', players: '' });
+
+      const addTeam = () => {
+        if (newTeam.name && newTeam.competition) {
+          setTeams([...teams, { 
+            id: Date.now(), 
+            name: newTeam.name, 
+            competition: newTeam.competition, 
+            players: parseInt(newTeam.players) || 0 
+          }]);
+          setNewTeam({ name: '', competition: '', players: '' });
+          setShowForm(false);
+        }
+      };
+
+      return (
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <h2 className="text-2xl font-bold font-heading">Team Management</h2>
+            <button 
+              onClick={() => setShowForm(true)}
+              className="px-4 py-2 bg-primary hover:bg-secondary rounded-xl transition-all duration-300 hover:scale-105 flex items-center gap-2"
+            >
+              <i data-lucide="plus" className="w-4 h-4"></i>
+              Add Team
+            </button>
+          </div>
+
+          {showForm && (
+            <div className="bg-slate-800/30 rounded-xl p-6 animate-fade-in">
+              <h3 className="text-lg font-semibold mb-4">Add New Team</h3>
+              <div className="grid md:grid-cols-3 gap-4 mb-4">
+                <input
+                  placeholder="Team Name"
+                  value={newTeam.name}
+                  onChange={e => setNewTeam({...newTeam, name: e.target.value})}
+                  className="px-4 py-3 bg-slate-700/50 border border-primary/20 rounded-xl focus:border-primary transition-colors"
+                />
+                <input
+                  placeholder="Competition"
+                  value={newTeam.competition}
+                  onChange={e => setNewTeam({...newTeam, competition: e.target.value})}
+                  className="px-4 py-3 bg-slate-700/50 border border-primary/20 rounded-xl focus:border-primary transition-colors"
+                />
+                <input
+                  placeholder="Number of Players"
+                  type="number"
+                  value={newTeam.players}
+                  onChange={e => setNewTeam({...newTeam, players: e.target.value})}
+                  className="px-4 py-3 bg-slate-700/50 border border-primary/20 rounded-xl focus:border-primary transition-colors"
+                />
+              </div>
+              <div className="flex gap-3">
+                <button onClick={addTeam} className="px-4 py-2 bg-primary hover:bg-secondary rounded-xl transition-colors">
+                  Save Team
+                </button>
+                <button onClick={() => setShowForm(false)} className="px-4 py-2 bg-slate-600 hover:bg-slate-500 rounded-xl transition-colors">
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
+
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-slate-700">
+                  <th className="text-left py-3 px-4">Team</th>
+                  <th className="text-left py-3 px-4">Competition</th>
+                  <th className="text-left py-3 px-4">Players</th>
+                  <th className="text-right py-3 px-4">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {teams.map((team, i) => (
+                  <tr key={team.id} className="border-b border-slate-800/40 hover:bg-slate-800/20 animate-fade-in" style={{animationDelay: `${i * 0.1}s`}}>
+                    <td className="py-4 px-4 font-semibold">{team.name}</td>
+                    <td className="py-4 px-4 text-slate-400">{team.competition}</td>
+                    <td className="py-4 px-4">{team.players}</td>
+                    <td className="py-4 px-4 text-right">
+                      <button className="p-2 hover:bg-slate-700 rounded-lg transition-colors mr-2">
+                        <i data-lucide="edit-2" className="w-4 h-4 text-primary"></i>
+                      </button>
+                      <button 
+                        onClick={() => setTeams(teams.filter(t => t.id !== team.id))}
+                        className="p-2 hover:bg-slate-700 rounded-lg transition-colors"
+                      >
+                        <i data-lucide="trash-2" className="w-4 h-4 text-red-400"></i>
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      );
+    }
+
+    function AdminFixtures() {
+      const [fixtures, setFixtures] = useState([
+        { id: 1, home: 'Manchester City', away: 'Arsenal', date: '2025-09-15', status: 'Scheduled' },
+        { id: 2, home: 'Liverpool', away: 'Chelsea', date: '2025-09-22', status: 'Completed' }
+      ]);
+
+      return (
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <h2 className="text-2xl font-bold font-heading">Fixture Management</h2>
+            <button className="px-4 py-2 bg-primary hover:bg-secondary rounded-xl transition-all duration-300 hover:scale-105 flex items-center gap-2">
+              <i data-lucide="calendar-plus" className="w-4 h-4"></i>
+              Add Fixture
+            </button>
+          </div>
+
+          <div className="grid gap-4">
+            {fixtures.map((fixture, i) => (
+              <div key={fixture.id} className="bg-slate-800/30 rounded-xl p-6 animate-fade-in" style={{animationDelay: `${i * 0.1}s`}}>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="text-lg font-semibold">{fixture.home} vs {fixture.away}</div>
+                    <div className={`px-3 py-1 rounded-full text-xs ${fixture.status === 'Completed' ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400'}`}>
+                      {fixture.status}
+                    </div>
+                  </div>
+                  <div className="text-slate-400">{fixture.date}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    function AdminStats() {
+      return (
+        <div className="space-y-6">
+          <h2 className="text-2xl font-bold font-heading">Statistics Management</h2>
+          
+          <div className="bg-slate-800/30 rounded-xl p-6">
+            <h3 className="text-lg font-semibold mb-4">Performance Metrics Input</h3>
+            <div className="grid md:grid-cols-3 gap-4">
+              {[
+                'Goals', 'Shots', 'Shots on Target', 'Expected Goals (xG)', 
+                'Possession %', 'Passes', 'Fouls', 'Yellow Cards', 'Red Cards'
+              ].map((metric, i) => (
+                <div key={metric} className="p-4 bg-slate-700/30 rounded-xl animate-fade-in" style={{animationDelay: `${i * 0.05}s`}}>
+                  <label className="block text-sm text-slate-400 mb-2">{metric}</label>
+                  <input 
+                    type="number" 
+                    className="w-full px-3 py-2 bg-slate-600/50 border border-primary/20 rounded-lg focus:border-primary transition-colors"
+                    placeholder="0"
+                  />
+                </div>
+              ))}
+            </div>
+            <button className="mt-6 px-6 py-3 bg-primary hover:bg-secondary rounded-xl transition-all duration-300 hover:scale-105">
+              Calculate PM Index
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    function AdminSettings() {
+      return (
+        <div className="space-y-6">
+          <h2 className="text-2xl font-bold font-heading">System Settings</h2>
+          
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-slate-800/30 rounded-xl p-6">
+              <h3 className="text-lg font-semibold mb-4">PM Algorithm Settings</h3>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm text-slate-400 mb-2">Goals Weight</label>
+                  <input type="range" min="1" max="10" className="w-full" />
+                </div>
+                <div>
+                  <label className="block text-sm text-slate-400 mb-2">Possession Weight</label>
+                  <input type="range" min="1" max="10" className="w-full" />
+                </div>
+                <div>
+                  <label className="block text-sm text-slate-400 mb-2">Defensive Weight</label>
+                  <input type="range" min="1" max="10" className="w-full" />
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-slate-800/30 rounded-xl p-6">
+              <h3 className="text-lg font-semibold mb-4">Data Management</h3>
+              <div className="space-y-3">
+                <button className="w-full p-3 bg-slate-700/50 hover:bg-primary/20 rounded-xl transition-colors text-left">
+                  <i data-lucide="upload" className="w-4 h-4 inline mr-2"></i>
+                  Import CSV Data
+                </button>
+                <button className="w-full p-3 bg-slate-700/50 hover:bg-primary/20 rounded-xl transition-colors text-left">
+                  <i data-lucide="download" className="w-4 h-4 inline mr-2"></i>
+                  Export Database
+                </button>
+                <button className="w-full p-3 bg-red-600/20 hover:bg-red-600/30 text-red-400 rounded-xl transition-colors text-left">
+                  <i data-lucide="trash-2" className="w-4 h-4 inline mr-2"></i>
+                  Reset All Data
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // Main App Component
+    function App(){
+      const [theme, setTheme] = useState(loadLS('pm_theme','dark'));
+      const [route, setRoute] = useState('/');
+      const [loading, setLoading] = useState(true);
+      const isAuthed = sessionStorage.getItem('pm_authed')==='1';
+
+      useEffect(() => {
+        document.documentElement.classList.add(theme);
+        const timer = setTimeout(() => setLoading(false), 2000);
+        return () => clearTimeout(timer);
+      }, []);
+
+      useEffect(() => { 
+        lucide.createIcons(); 
+      }, [route, theme]);
+
+      if (loading) return <LoadingPage />;
+
+      let content = <Home/>;
+      if (route === '/coming-soon') {
+        content = <ComingSoonPage />;
+      } else if (route === '/season-2025-26') {
+        content = <Season202526Page />;
+      } else if (route === '/admin') {
+        content = isAuthed ? <AdminPanel/> : <AdminLogin onAuthed={()=>setRoute('/admin')} />;
+      }
+
+      return (
+        <div className="min-h-screen">
+          <NavBar 
+            theme={theme} 
+            setTheme={setTheme} 
+            route={route} 
+            setRoute={setRoute} 
+            isAuthed={isAuthed} 
+          />
+          {content}
+          <footer className="mt-16 py-8 border-t border-primary/20 text-center animate-fade-in">
+            <div className="container mx-auto px-4">
+              <div className="text-sm opacity-60">
+                © {new Date().getFullYear()} PMxFootball • Redefining Football Performance
+              </div>
+            </div>
+          </footer>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App/>);
+  </script>
+</body>
