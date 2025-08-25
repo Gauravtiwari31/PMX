@@ -1,0 +1,1 @@
+export const saveLS=(k,v)=>localStorage.setItem(k,JSON.stringify(v));export const loadLS=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d;}catch{return d;}};export const clsx=(...xs)=>xs.filter(Boolean).join(' ');
