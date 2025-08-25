@@ -21,6 +21,8 @@ function App(){
       content = <ComingSoonPage />;
     } else if (route === '/season-2025-26') {
       content = <Season202526Page />;
+    } else if (route === '/login') {
+      content = <AdminLogin onAuthed={()=>setRoute('/admin')} />;
     } else if (route === '/admin') {
       content = isAuthed ? <AdminPanel/> : <AdminLogin onAuthed={()=>setRoute('/admin')} />;
     }
