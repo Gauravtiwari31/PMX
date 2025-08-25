@@ -1,5 +1,8 @@
 function NavBar({ theme, setTheme, route, setRoute, isAuthed }) {
-  function navigate(to) { setRoute(to); }
+  function navigate(to) {
+    setRoute(to);
+  }
+
   function toggleTheme() {
     const next = theme === 'dark' ? 'light' : 'dark';
     document.documentElement.classList.remove('dark', 'light');
@@ -38,9 +41,6 @@ function NavBar({ theme, setTheme, route, setRoute, isAuthed }) {
         <nav className="flex items-center gap-1">
           <LinkButton id="/" label="Home" />
           <LinkButton id="/season-2025-26" label="2025/26" />
-          <LinkButton id="/fixtures" label="Fixtures" />
-          <LinkButton id="/teams" label="Teams" />
-          <LinkButton id="/stats" label="Stats" />
           <LinkButton id="/coming-soon" label="Coming Soon" />
           {isAuthed ? (
             <LinkButton id="/admin" label="Admin" />
