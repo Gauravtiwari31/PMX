@@ -2,6 +2,12 @@ function RegionCompetitions({ region, onBack, data }) {
   const [selectedComp, setSelectedComp] = React.useState(null);
   const competitions = (data && data[region]) || [];
 
+  React.useEffect(() => {
+    if (window.lucide && typeof window.lucide.createIcons === 'function') {
+      window.lucide.createIcons();
+    }
+  }, [region, selectedComp]);
+
   const regionNames = {
     uefa: 'European Competitions (UEFA)',
     england: 'England Competitions', 
@@ -14,11 +20,47 @@ function RegionCompetitions({ region, onBack, data }) {
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-0 z-50 animate-fade-in">
       <div className="bg-slate-900 p-8 w-full h-full overflow-y-auto">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold font-heading">{regionNames[region]}</h2>
-          <button onClick={onBack} className="p-2 hover:bg-slate-800 rounded-xl transition-colors">
-            <i data-lucide="x" className="w-6 h-6"></i>
-          </button>
+        <div className="mb-6 space-y-3">
+          <div className="flex items-center justify-between">
+            <nav className="text-sm text-slate-400 flex items-center gap-2">
+              <a href="index.html" className="hover:text-white">Home</a>
+              <span className="opacity-50">/</span>
+              <a href="season-2025-26.html" className="hover:text-white">Season 2025/26</a>
+              <span className="opacity-50">/</span>
+              <button onClick={() => setSelectedComp(null)} className="hover:text-white">
+                {regionNames[region]}
+              </button>
+              {selectedComp && (
+                <>
+                  <span className="opacity-50">/</span>
+                  <span className="text-slate-200">
+                    {competitions.find(c => c.key === selectedComp)?.name}
+                  </span>
+                </>
+              )}
+            </nav>
+            <button onClick={onBack} className="p-2 hover:bg-slate-800 rounded-xl transition-colors" title="Close">
+              <i data-lucide="x" className="w-6 h-6"></i>
+            </button>
+          </div>
+          {competitions.length > 0 && (
+            <div className="flex items-center gap-2 overflow-x-auto pb-1">
+              {competitions.map((comp) => (
+                <button
+                  key={comp.key}
+                  onClick={() => setSelectedComp(comp.key)}
+                  className={clsx(
+                    'px-3 py-1.5 rounded-full text-sm border transition-colors whitespace-nowrap',
+                    selectedComp === comp.key 
+                      ? 'bg-primary/20 border-primary text-white' 
+                      : 'bg-slate-800/50 border-slate-700 text-slate-300 hover:bg-slate-700/50'
+                  )}
+                >
+                  {comp.name}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         {!selectedComp ? (
