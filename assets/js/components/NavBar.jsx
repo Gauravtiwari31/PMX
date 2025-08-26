@@ -38,11 +38,6 @@ function NavBar({ theme, setTheme, route, setRoute, isAuthed }) {
           <LinkButton href="index.html" label="Home" />
           <LinkButton href="season-2025-26.html" label="2025/26" />
           <LinkButton href="coming-soon.html" label="Coming Soon" />
-          {isAuthed ? (
-            <LinkButton href="admin.html" label="Admin" />
-          ) : (
-            <LinkButton href="login.html" label="Login" />
-          )}
           <button
             className="ml-2 px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800 flex items-center gap-2"
             onClick={toggleTheme}

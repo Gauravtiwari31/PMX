@@ -2,7 +2,7 @@ function App(){
   const [theme, setTheme] = React.useState(loadLS('pm_theme','dark'));
   const [route, setRoute] = React.useState('/');
   const [loading, setLoading] = React.useState(true);
-  const isAuthed = sessionStorage.getItem('pm_authed')==='1';
+  const isAuthed = false;
 
   // Hash-based routing for GitHub Pages
   React.useEffect(() => {
@@ -14,6 +14,7 @@ function App(){
   }, []);
 
   React.useEffect(() => {
+    document.documentElement.classList.remove('dark', 'light');
     document.documentElement.classList.add(theme);
     const timer = setTimeout(() => setLoading(false), 400);
     return () => clearTimeout(timer);
@@ -41,10 +42,6 @@ function App(){
     content = <Teams />;
   } else if (route === '/stats') {
     content = <Stats />;
-  } else if (route === '/login') {
-    content = <AdminLogin onAuthed={()=>setRouteAndHash('/admin')} />;
-  } else if (route === '/admin') {
-    content = isAuthed ? <AdminPanel/> : <AdminLogin onAuthed={()=>setRouteAndHash('/admin')} />;
   }
 
   return (

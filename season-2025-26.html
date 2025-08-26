@@ -21,12 +21,16 @@
   <script src="./assets/js/components/LoadingPage.jsx" type="text/babel" data-presets="env,react"></script>
   <script src="./assets/js/components/RegionCompetitions.jsx" type="text/babel" data-presets="env,react"></script>
   <script src="./assets/js/components/Season202526Page.jsx" type="text/babel" data-presets="env,react"></script>
+  <script type="application/json" id="fixtures-json-path">{"path":"./assets/data/seasons/2025-26/fixtures.json"}</script>
 
   <script type="text/babel" data-presets="env,react">
     function Page(){
       const [theme, setTheme] = React.useState(loadLS('pm_theme','dark'));
       const isAuthed = sessionStorage.getItem('pm_authed')==='1';
-      React.useEffect(()=>{ document.documentElement.classList.add(theme); },[]);
+      React.useEffect(()=>{ 
+        document.documentElement.classList.remove('dark','light');
+        document.documentElement.classList.add(theme); 
+      },[]);
       return (
         <div className="min-h-screen">
           <NavBar theme={theme} setTheme={setTheme} route="/season-2025-26" setRoute={()=>{}} isAuthed={isAuthed} />

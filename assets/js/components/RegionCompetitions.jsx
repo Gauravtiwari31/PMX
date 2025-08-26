@@ -1,6 +1,6 @@
-function RegionCompetitions({ region, onBack }) {
+function RegionCompetitions({ region, onBack, data }) {
   const [selectedComp, setSelectedComp] = React.useState(null);
-  const competitions = SEASON_2025_26_DATA[region] || [];
+  const competitions = (data && data[region]) || [];
 
   const regionNames = {
     uefa: 'European Competitions (UEFA)',

@@ -1,13 +1,25 @@
 function Season202526Page() {
   const [loading, setLoading] = React.useState(true);
   const [selectedRegion, setSelectedRegion] = React.useState(null);
+  const [seasonData, setSeasonData] = React.useState(null);
+  const [loadError, setLoadError] = React.useState(null);
 
   React.useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 800);
     return () => clearTimeout(timer);
   }, []);
 
-  if (loading) return <LoadingPage />;
+  React.useEffect(() => {
+    fetch('./assets/data/seasons/2025-26/fixtures.json', { cache: 'no-store' })
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to load fixtures.json');
+        return res.json();
+      })
+      .then((json) => setSeasonData(json))
+      .catch((err) => setLoadError(err.message || 'Error loading data'));
+  }, []);
+
+  if (loading || !seasonData) return <LoadingPage />;
 
   const regions = [
     { key: 'uefa', name: 'European Competitions (UEFA)', icon: '🇪🇺', color: 'bg-primary' },
@@ -43,7 +55,13 @@ function Season202526Page() {
         ))}
       </div>
 
-      {selectedRegion && <RegionCompetitions region={selectedRegion} onBack={() => setSelectedRegion(null)} />}
+      {selectedRegion && (
+        <RegionCompetitions 
+          region={selectedRegion} 
+          onBack={() => setSelectedRegion(null)} 
+          data={seasonData}
+        />
+      )}
     </main>
   );
 }
