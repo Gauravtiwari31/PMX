@@ -9,7 +9,8 @@ function Season202526Page() {
     return () => clearTimeout(timer);
   }, []);
 
-  React.useEffect(() => {
+  function fetchSeasonData() {
+    setLoadError(null);
     fetch('./assets/data/seasons/2025-26/fixtures.json', { cache: 'no-store' })
       .then((res) => {
         if (!res.ok) throw new Error('Failed to load fixtures.json');
@@ -17,7 +18,23 @@ function Season202526Page() {
       })
       .then((json) => setSeasonData(json))
       .catch((err) => setLoadError(err.message || 'Error loading data'));
-  }, []);
+  }
+
+  React.useEffect(() => { fetchSeasonData(); }, []);
+
+  if (loadError) {
+    return (
+      <main className="container mx-auto px-4 py-8 animate-fade-in">
+        <div className="card-grad rounded-2xl p-8">
+          <h2 className="text-2xl font-bold mb-2 font-heading">Failed to load season data</h2>
+          <p className="text-slate-400 mb-4">{loadError}</p>
+          <button onClick={fetchSeasonData} className="px-4 py-2 rounded-md bg-primary text-white hover:opacity-90">
+            Retry
+          </button>
+        </div>
+      </main>
+    );
+  }
 
   if (loading || !seasonData) return <LoadingPage />;
 
