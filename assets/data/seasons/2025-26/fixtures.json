@@ -1,7 +1,7 @@
 {
   "uefa": [
     {
-      "key": "ucl_25_26",
+      "key": "1",
       "name": "UEFA Champions League",
       "teams": [
         "Arsenal",
@@ -22,7 +22,7 @@
         { "home": "Dortmund", "score": "3-1", "away": "Barcelona", "pm": "87-79" }
       ]
     },
-    { "key": "uel_25_26", "name": "UEFA Europa League", "teams": [], "fixtures": [
+    { "key": "2", "name": "UEFA Europa League", "teams": [], "fixtures": [
       { "home": "Arsenal", "score": "3-0", "away": "Real Madrid", "pm": "85-72" },
       { "home": "Bayern München", "score": "1-2", "away": "Inter", "pm": "78-82" },
       { "home": "Barcelona", "score": "4-0", "away": "Dortmund", "pm": "92-65" },
@@ -30,7 +30,7 @@
       { "home": "Aston Villa", "score": "3-2", "away": "PSG", "pm": "84-81" },
       { "home": "Dortmund", "score": "3-1", "away": "Barcelona", "pm": "87-79" }
     ] },
-    { "key": "usup_25_26", "name": "UEFA Super Cup", "teams": [], "fixtures": [
+    { "key": "3", "name": "UEFA Super Cup", "teams": [], "fixtures": [
       { "home": "Arsenal", "score": "3-0", "away": "Real Madrid", "pm": "85-72" },
       { "home": "Bayern München", "score": "1-2", "away": "Inter", "pm": "78-82" },
       { "home": "Barcelona", "score": "4-0", "away": "Dortmund", "pm": "92-65" },
@@ -40,7 +40,7 @@
     ] }
   ],
   "england": [
-    { "key": "epl_25_26", "name": "Premier League", "teams": [], "fixtures": [
+    { "key": "1", "name": "Premier League", "teams": [], "fixtures": [
       { "home": "Arsenal", "score": "3-0", "away": "Real Madrid", "pm": "85-72" },
       { "home": "Bayern München", "score": "1-2", "away": "Inter", "pm": "78-82" },
       { "home": "Barcelona", "score": "4-0", "away": "Dortmund", "pm": "92-65" },
@@ -48,7 +48,7 @@
       { "home": "Aston Villa", "score": "3-2", "away": "PSG", "pm": "84-81" },
       { "home": "Dortmund", "score": "3-1", "away": "Barcelona", "pm": "87-79" }
     ] },
-    { "key": "facup_25_26", "name": "FA Cup", "teams": [], "fixtures": [
+    { "key": "2", "name": "FA Cup", "teams": [], "fixtures": [
       { "home": "Arsenal", "score": "3-0", "away": "Real Madrid", "pm": "85-72" },
       { "home": "Bayern München", "score": "1-2", "away": "Inter", "pm": "78-82" },
       { "home": "Barcelona", "score": "4-0", "away": "Dortmund", "pm": "92-65" },
@@ -56,7 +56,7 @@
       { "home": "Aston Villa", "score": "3-2", "away": "PSG", "pm": "84-81" },
       { "home": "Dortmund", "score": "3-1", "away": "Barcelona", "pm": "87-79" }
     ] },
-    { "key": "carabao_25_26", "name": "Carabao Cup", "teams": [], "fixtures": [
+    { "key": "3", "name": "Carabao Cup", "teams": [], "fixtures": [
       { "home": "Arsenal", "score": "3-0", "away": "Real Madrid", "pm": "85-72" },
       { "home": "Bayern München", "score": "1-2", "away": "Inter", "pm": "78-82" },
       { "home": "Barcelona", "score": "4-0", "away": "Dortmund", "pm": "92-65" },
@@ -64,7 +64,7 @@
       { "home": "Aston Villa", "score": "3-2", "away": "PSG", "pm": "84-81" },
       { "home": "Dortmund", "score": "3-1", "away": "Barcelona", "pm": "87-79" }
     ] },
-    { "key": "cs_25_26", "name": "Community Shield", "teams": [], "fixtures": [
+    { "key": "4", "name": "Community Shield", "teams": [], "fixtures": [
       { "home": "Arsenal", "score": "3-0", "away": "Real Madrid", "pm": "85-72" },
       { "home": "Bayern München", "score": "1-2", "away": "Inter", "pm": "78-82" },
       { "home": "Barcelona", "score": "4-0", "away": "Dortmund", "pm": "92-65" },
@@ -74,7 +74,7 @@
     ] }
   ],
   "spain": [
-    { "key": "laliga_25_26", "name": "La Liga", "teams": [], "fixtures": [
+    { "key": "1", "name": "La Liga", "teams": [], "fixtures": [
       { "home": "Arsenal", "score": "3-0", "away": "Real Madrid", "pm": "85-72" },
       { "home": "Bayern München", "score": "1-2", "away": "Inter", "pm": "78-82" },
       { "home": "Barcelona", "score": "4-0", "away": "Dortmund", "pm": "92-65" },
@@ -82,7 +82,7 @@
       { "home": "Aston Villa", "score": "3-2", "away": "PSG", "pm": "84-81" },
       { "home": "Dortmund", "score": "3-1", "away": "Barcelona", "pm": "87-79" }
     ] },
-    { "key": "cdr_25_26", "name": "Copa del Rey", "teams": [], "fixtures": [
+    { "key": "2", "name": "Copa del Rey", "teams": [], "fixtures": [
       { "home": "Arsenal", "score": "3-0", "away": "Real Madrid", "pm": "85-72" },
       { "home": "Bayern München", "score": "1-2", "away": "Inter", "pm": "78-82" },
       { "home": "Barcelona", "score": "4-0", "away": "Dortmund", "pm": "92-65" },
@@ -90,7 +90,7 @@
       { "home": "Aston Villa", "score": "3-2", "away": "PSG", "pm": "84-81" },
       { "home": "Dortmund", "score": "3-1", "away": "Barcelona", "pm": "87-79" }
     ] },
-    { "key": "ss_25_26", "name": "Spanish Supercup", "teams": [], "fixtures": [
+    { "key": "3", "name": "Spanish Supercup", "teams": [], "fixtures": [
       { "home": "Arsenal", "score": "3-0", "away": "Real Madrid", "pm": "85-72" },
       { "home": "Bayern München", "score": "1-2", "away": "Inter", "pm": "78-82" },
       { "home": "Barcelona", "score": "4-0", "away": "Dortmund", "pm": "92-65" },
@@ -100,7 +100,7 @@
     ] }
   ],
   "france": [
-    { "key": "ligue1_25_26", "name": "Ligue 1", "teams": [], "fixtures": [
+    { "key": "1", "name": "Ligue 1", "teams": [], "fixtures": [
       { "home": "Arsenal", "score": "3-0", "away": "Real Madrid", "pm": "85-72" },
       { "home": "Bayern München", "score": "1-2", "away": "Inter", "pm": "78-82" },
       { "home": "Barcelona", "score": "4-0", "away": "Dortmund", "pm": "92-65" },
@@ -108,7 +108,7 @@
       { "home": "Aston Villa", "score": "3-2", "away": "PSG", "pm": "84-81" },
       { "home": "Dortmund", "score": "3-1", "away": "Barcelona", "pm": "87-79" }
     ] },
-    { "key": "cdf_25_26", "name": "Coupe de France", "teams": [], "fixtures": [
+    { "key": "2", "name": "Coupe de France", "teams": [], "fixtures": [
       { "home": "Arsenal", "score": "3-0", "away": "Real Madrid", "pm": "85-72" },
       { "home": "Bayern München", "score": "1-2", "away": "Inter", "pm": "78-82" },
       { "home": "Barcelona", "score": "4-0", "away": "Dortmund", "pm": "92-65" },
@@ -116,7 +116,7 @@
       { "home": "Aston Villa", "score": "3-2", "away": "PSG", "pm": "84-81" },
       { "home": "Dortmund", "score": "3-1", "away": "Barcelona", "pm": "87-79" }
     ] },
-    { "key": "fs_25_26", "name": "French Supercup", "teams": [], "fixtures": [
+    { "key": "3", "name": "French Supercup", "teams": [], "fixtures": [
       { "home": "Arsenal", "score": "3-0", "away": "Real Madrid", "pm": "85-72" },
       { "home": "Bayern München", "score": "1-2", "away": "Inter", "pm": "78-82" },
       { "home": "Barcelona", "score": "4-0", "away": "Dortmund", "pm": "92-65" },
@@ -126,7 +126,7 @@
     ] }
   ],
   "italy": [
-    { "key": "seriea_25_26", "name": "Serie A", "teams": [], "fixtures": [
+    { "key": "1", "name": "Serie A", "teams": [], "fixtures": [
       { "home": "Arsenal", "score": "3-0", "away": "Real Madrid", "pm": "85-72" },
       { "home": "Bayern München", "score": "1-2", "away": "Inter", "pm": "78-82" },
       { "home": "Barcelona", "score": "4-0", "away": "Dortmund", "pm": "92-65" },
@@ -134,7 +134,7 @@
       { "home": "Aston Villa", "score": "3-2", "away": "PSG", "pm": "84-81" },
       { "home": "Dortmund", "score": "3-1", "away": "Barcelona", "pm": "87-79" }
     ] },
-    { "key": "coppa_25_26", "name": "Coppa Italia", "teams": [], "fixtures": [
+    { "key": "2", "name": "Coppa Italia", "teams": [], "fixtures": [
       { "home": "Arsenal", "score": "3-0", "away": "Real Madrid", "pm": "85-72" },
       { "home": "Bayern München", "score": "1-2", "away": "Inter", "pm": "78-82" },
       { "home": "Barcelona", "score": "4-0", "away": "Dortmund", "pm": "92-65" },
@@ -142,7 +142,7 @@
       { "home": "Aston Villa", "score": "3-2", "away": "PSG", "pm": "84-81" },
       { "home": "Dortmund", "score": "3-1", "away": "Barcelona", "pm": "87-79" }
     ] },
-    { "key": "is_25_26", "name": "Italian Supercup", "teams": [], "fixtures": [
+    { "key": "3", "name": "Italian Supercup", "teams": [], "fixtures": [
       { "home": "Arsenal", "score": "3-0", "away": "Real Madrid", "pm": "85-72" },
       { "home": "Bayern München", "score": "1-2", "away": "Inter", "pm": "78-82" },
       { "home": "Barcelona", "score": "4-0", "away": "Dortmund", "pm": "92-65" },
@@ -152,7 +152,7 @@
     ] }
   ],
   "germany": [
-    { "key": "bundes_25_26", "name": "Bundesliga", "teams": [], "fixtures": [
+    { "key": "1", "name": "Bundesliga", "teams": [], "fixtures": [
       { "home": "Arsenal", "score": "3-0", "away": "Real Madrid", "pm": "85-72" },
       { "home": "Bayern München", "score": "1-2", "away": "Inter", "pm": "78-82" },
       { "home": "Barcelona", "score": "4-0", "away": "Dortmund", "pm": "92-65" },
@@ -160,7 +160,7 @@
       { "home": "Aston Villa", "score": "3-2", "away": "PSG", "pm": "84-81" },
       { "home": "Dortmund", "score": "3-1", "away": "Barcelona", "pm": "87-79" }
     ] },
-    { "key": "dfb_25_26", "name": "DFB Pokal", "teams": [], "fixtures": [
+    { "key": "2", "name": "DFB Pokal", "teams": [], "fixtures": [
       { "home": "Arsenal", "score": "3-0", "away": "Real Madrid", "pm": "85-72" },
       { "home": "Bayern München", "score": "1-2", "away": "Inter", "pm": "78-82" },
       { "home": "Barcelona", "score": "4-0", "away": "Dortmund", "pm": "92-65" },
@@ -168,7 +168,7 @@
       { "home": "Aston Villa", "score": "3-2", "away": "PSG", "pm": "84-81" },
       { "home": "Dortmund", "score": "3-1", "away": "Barcelona", "pm": "87-79" }
     ] },
-    { "key": "gs_25_26", "name": "German Supercup", "teams": [], "fixtures": [
+    { "key": "3", "name": "German Supercup", "teams": [], "fixtures": [
       { "home": "Arsenal", "score": "3-0", "away": "Real Madrid", "pm": "85-72" },
       { "home": "Bayern München", "score": "1-2", "away": "Inter", "pm": "78-82" },
       { "home": "Barcelona", "score": "4-0", "away": "Dortmund", "pm": "92-65" },
