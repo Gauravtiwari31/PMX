@@ -36,8 +36,8 @@ function NavBar({ theme, setTheme, route, setRoute, isAuthed }) {
         </div>
         <nav className="flex items-center gap-1">
           <LinkButton href="index.html" label="Home" />
-          <LinkButton href="season-2025-26.html" label="2025/26" />
           <LinkButton href="coming-soon.html" label="Coming Soon" />
+          <LinkButton href="season-2025-26.html" label="2025/26" />
           <button
             className="ml-2 px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800 flex items-center gap-2"
             onClick={toggleTheme}
