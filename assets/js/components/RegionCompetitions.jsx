@@ -90,14 +90,18 @@ function RegionCompetitions({ region, onBack, data }) {
               if (!comp) return null;
               const sections = Array.isArray(comp.stages) && comp.stages.length > 0
                 ? comp.stages
-                : [{ name: 'Fixtures', fixtures: comp.fixtures || [] }];
+                : [
+                    { name: 'Quarter-final', fixtures: comp.fixtures || [] },
+                    { name: 'Semi-final', fixtures: comp.fixtures || [] },
+                    { name: 'Final', fixtures: comp.fixtures || [] }
+                  ];
 
               return (
                 <div className="space-y-6">
                   {sections.map((section, sIdx) => (
                     <div key={sIdx} className="card-grad rounded-xl p-6">
                       <div className="flex items-center justify-between mb-4">
-                        <h4 className="text-lg font-semibold">{section.name}</h4>
+                        <h4 className="text-lg font-semibold text-slate-200">{section.name}</h4>
                       </div>
                       <div className="space-y-4 overflow-y-auto">
                         {section.fixtures.map((fixture, i) => (
