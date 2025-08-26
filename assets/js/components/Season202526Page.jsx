@@ -63,7 +63,16 @@ function Season202526Page() {
             onClick={() => setSelectedRegion(region.key)}
           >
             <div className="text-center">
-              <div className="text-6xl mb-4 animate-bounce-gentle">{region.icon}</div>
+              <div className="mb-4 animate-bounce-gentle flex items-center justify-center">
+                <img src={
+                  region.key === 'uefa' ? './assets/img/flags/eu.svg' :
+                  region.key === 'england' ? './assets/img/flags/gb-eng.svg' :
+                  region.key === 'spain' ? './assets/img/flags/es.svg' :
+                  region.key === 'france' ? './assets/img/flags/fr.svg' :
+                  region.key === 'italy' ? './assets/img/flags/it.svg' :
+                  region.key === 'germany' ? './assets/img/flags/de.svg' : ''
+                } alt="flag" className="w-16 h-10 object-cover rounded shadow" />
+              </div>
               <h3 className="text-xl font-semibold font-heading mb-4">{region.name}</h3>
               <div className={`w-full h-1 ${region.color} rounded mb-4 animate-pulse`}></div>
               <p className="text-sm text-slate-400">Click to view competitions</p>
