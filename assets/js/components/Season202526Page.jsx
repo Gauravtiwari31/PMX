@@ -40,11 +40,11 @@ function Season202526Page() {
 
   const regions = [
     { key: 'uefa', name: 'European Competitions (UEFA)', icon: '🇪🇺', color: 'bg-primary' },
-    { key: 'england', name: 'England Competitions', icon: '🏴', color: 'bg-secondary' },
+    { key: 'england', name: 'English Competitions', icon: '🏴', color: 'bg-secondary' },
     { key: 'spain', name: 'Spanish Competitions', icon: '🇪🇸', color: 'bg-accent' },
-    { key: 'france', name: 'France Competitions', icon: '🇫🇷', color: 'bg-primary' },
+    { key: 'france', name: 'French Competitions', icon: '🇫🇷', color: 'bg-primary' },
     { key: 'italy', name: 'Italian Competitions', icon: '🇮🇹', color: 'bg-secondary' },
-    { key: 'germany', name: 'Germany Competitions', icon: '🇩🇪', color: 'bg-accent' }
+    { key: 'germany', name: 'German Competitions', icon: '🇩🇪', color: 'bg-accent' }
   ];
 
   return (
