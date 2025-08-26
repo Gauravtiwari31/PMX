@@ -10,11 +10,11 @@ function RegionCompetitions({ region, onBack, data }) {
 
   const regionNames = {
     uefa: 'European Competitions (UEFA)',
-    england: 'England Competitions', 
+    england: 'English Competitions', 
     spain: 'Spanish Competitions',
-    france: 'France Competitions',
+    france: 'French Competitions',
     italy: 'Italian Competitions',
-    germany: 'Germany Competitions'
+    germany: 'German Competitions'
   };
 
   return (
