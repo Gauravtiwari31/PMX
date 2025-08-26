@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,6 +12,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <script>
+    try {
+      var t = JSON.parse(localStorage.getItem('pm_theme')) || 'dark';
+      document.documentElement.classList.remove('dark','light');
+      document.documentElement.classList.add(t);
+    } catch (e) {}
+  </script>
 
   <!-- Tailwind config must load BEFORE the CDN script -->
   <script src="./assets/js/tailwind-config.js"></script>
@@ -30,7 +38,7 @@
   <!-- Custom CSS -->
   <link rel="stylesheet" href="./assets/css/styles.css" />
 </head>
-<body class="min-h-screen bg-slate-950 text-slate-100 dark:bg-slate-950 dark:text-slate-100 light:bg-white light:text-slate-900 transition-all duration-300 font-body animated-bg floating-shapes">
+<body class="min-h-screen bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-all duration-300 font-body animated-bg floating-shapes">
   <div id="root"></div>
 
   <!-- App data & utilities -->

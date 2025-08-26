@@ -1,7 +1,7 @@
 function NavBar({ theme, setTheme, route, setRoute, isAuthed }) {
   function toggleTheme() {
     const next = theme === 'dark' ? 'light' : 'dark';
-    document.documentElement.classList.remove('dark', 'light');
+    document.documentElement.classList.remove('dark','light');
     document.documentElement.classList.add(next);
     saveLS('pm_theme', next);
     setTheme(next);
