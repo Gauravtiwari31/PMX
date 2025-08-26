@@ -1,12 +1,13 @@
 function RegionCompetitions({ region, onBack, data }) {
   const [selectedComp, setSelectedComp] = React.useState(null);
+  const [selectedStageIndex, setSelectedStageIndex] = React.useState(0);
   const competitions = (data && data[region]) || [];
 
   React.useEffect(() => {
     if (window.lucide && typeof window.lucide.createIcons === 'function') {
       window.lucide.createIcons();
     }
-  }, [region, selectedComp]);
+  }, [region, selectedComp, selectedStageIndex]);
 
   const regionNames = {
     uefa: 'European Competitions (UEFA)',
@@ -85,29 +86,59 @@ function RegionCompetitions({ region, onBack, data }) {
               <h3 className="text-xl font-semibold">{competitions.find(c => c.key === selectedComp)?.name}</h3>
             </div>
 
-            <div className="card-grad rounded-xl p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h4 className="text-lg font-semibold">Fixtures</h4>
-              </div>
-              <div className="space-y-4 overflow-y-auto">
-                <h5 className="text-xl font-bold text-center">Quarter-final</h5>
-                {competitions.find(c => c.key === selectedComp)?.fixtures.map((fixture, i) => (
-                  <div key={i} className="flex items-center justify-center p-3 bg-slate-800/50 rounded-lg">
-                    <div className="flex items-center justify-between w-1/2">
-                      <span className="font-semibold text-right pr-4">{fixture.home}</span>
-                      <div className="text-center px-4">
-                        <div>{fixture.score}</div>
-                        <div className="text-sm text-slate-400">PM: {fixture.pm}</div>
+            {(() => {
+              const comp = competitions.find(c => c.key === selectedComp);
+              const hasStages = comp && Array.isArray(comp.stages) && comp.stages.length > 0;
+              const fixturesToShow = hasStages
+                ? (comp.stages[selectedStageIndex]?.fixtures || [])
+                : (comp?.fixtures || []);
+              const heading = hasStages
+                ? (comp.stages[selectedStageIndex]?.name || 'Fixtures')
+                : 'Fixtures';
+
+              return (
+                <div className="card-grad rounded-xl p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <h4 className="text-lg font-semibold">{heading}</h4>
+                    {hasStages && (
+                      <div className="flex items-center gap-2">
+                        {comp.stages.map((s, idx) => (
+                          <button
+                            key={idx}
+                            onClick={() => setSelectedStageIndex(idx)}
+                            className={clsx(
+                              'px-3 py-1.5 rounded-full text-sm border transition-colors whitespace-nowrap',
+                              selectedStageIndex === idx
+                                ? 'bg-primary/20 border-primary text-white'
+                                : 'bg-slate-800/50 border-slate-700 text-slate-300 hover:bg-slate-700/50'
+                            )}
+                          >
+                            {s.name}
+                          </button>
+                        ))}
                       </div>
-                      <span className="font-semibold text-left pl-4">{fixture.away}</span>
-                    </div>
+                    )}
                   </div>
-                ))}
-                {competitions.find(c => c.key === selectedComp)?.fixtures.length === 0 && (
-                  <p className="text-slate-400 text-sm text-center">No fixtures added yet</p>
-                )}
-              </div>
-            </div>
+                  <div className="space-y-4 overflow-y-auto">
+                    {fixturesToShow.map((fixture, i) => (
+                      <div key={i} className="flex items-center justify-center p-3 bg-slate-800/50 rounded-lg">
+                        <div className="flex items-center justify-between w-full md:w-2/3">
+                          <span className="font-semibold text-right pr-4 w-1/3 truncate">{fixture.home}</span>
+                          <div className="text-center px-4 w-1/3">
+                            <div>{fixture.score}</div>
+                            <div className="text-sm text-slate-400">PM: {fixture.pm}</div>
+                          </div>
+                          <span className="font-semibold text-left pl-4 w-1/3 truncate">{fixture.away}</span>
+                        </div>
+                      </div>
+                    ))}
+                    {fixturesToShow.length === 0 && (
+                      <p className="text-slate-400 text-sm text-center">No fixtures added yet</p>
+                    )}
+                  </div>
+                </div>
+              );
+            })()}
           </div>
         )}
       </div>
