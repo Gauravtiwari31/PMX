@@ -9,6 +9,11 @@ function RegionCompetitions({ region, onBack, data }) {
     }
   }, [region, selectedComp, selectedStageIndex]);
 
+  React.useEffect(() => {
+    // Reset stage selection whenever we switch competition
+    setSelectedStageIndex(0);
+  }, [selectedComp]);
+
   const regionNames = {
     uefa: 'European Competitions (UEFA)',
     england: 'England Competitions', 
@@ -89,20 +94,23 @@ function RegionCompetitions({ region, onBack, data }) {
             {(() => {
               const comp = competitions.find(c => c.key === selectedComp);
               const hasStages = comp && Array.isArray(comp.stages) && comp.stages.length > 0;
-              const fixturesToShow = hasStages
-                ? (comp.stages[selectedStageIndex]?.fixtures || [])
-                : (comp?.fixtures || []);
-              const heading = hasStages
-                ? (comp.stages[selectedStageIndex]?.name || 'Fixtures')
-                : 'Fixtures';
+              const derivedStages = !hasStages
+                ? [
+                    { name: 'Quarter-final', fixtures: comp?.fixtures || [] },
+                    { name: 'Semi-final', fixtures: comp?.fixtures || [] },
+                    { name: 'Final', fixtures: comp?.fixtures || [] }
+                  ]
+                : comp.stages;
+              const fixturesToShow = derivedStages[selectedStageIndex]?.fixtures || [];
+              const heading = derivedStages[selectedStageIndex]?.name || 'Fixtures';
 
               return (
                 <div className="card-grad rounded-xl p-6">
                   <div className="flex items-center justify-between mb-4">
                     <h4 className="text-lg font-semibold">{heading}</h4>
-                    {hasStages && (
+                    {derivedStages && derivedStages.length > 0 && (
                       <div className="flex items-center gap-2">
-                        {comp.stages.map((s, idx) => (
+                        {derivedStages.map((s, idx) => (
                           <button
                             key={idx}
                             onClick={() => setSelectedStageIndex(idx)}
